@@ -1,17 +1,55 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App 22</title>
-</head>
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clock Test CORS</title>
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css"  >
+  </head>
 <body>
-  <main>
-    <h1>Vanilla JavaScript App</h1>
-  </main>
-</body>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="text-center">
+    <h1 class="display-4">Dayforce HTML Clock</h1>
 
+    <form>
+        <div class="form-group">
+            <label>Device Service Domain URL</label>
+            <input class="form-control" type="text" placeholder="Device Service Domain URL" name="domainUrl" id="domainUrl" value="https://qa.dayforce.com/862/deviceservices/DeviceServiceJSON.svc/getServerTime">
+        </div>
+        <button id="submit" class="btn btn-primary">Submit</button> <button id="clear" class="btn">Clear</button><br> <br>
+ 
+        <div class="form-group">
+            <textarea class="form-control" type="text" placeholder="Request Result" id="requestResult" readonly></textarea>
+        </div>
+    </form>
+    <p>
+        <div class="alert alert-primary">
+            https://l-r910lped.corpadds.com/DeviceServices/DeviceServiceJSON.svc/getServerTime
+        </div>
+        <div class="alert alert-primary">
+            https://punch.dayforcehcm.com/DeviceServices/DeviceServiceJSON.svc/getServerTime
+        </div>
+        <div class="alert alert-primary">
+            https://ustestdftouch62e2.dayforcehcm.com/DeviceServices/DeviceServiceJSON.svc/getServerTime
+        </div>
+        <div class="alert alert-primary">
+            https://qa.dayforce.com/862/deviceservices/DeviceServiceJSON.svc/getServerTime
+        </div>
+    </p>
+</div>
+
+        </main>
+    </div>
+
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+
+    
+</body>
 </html>
