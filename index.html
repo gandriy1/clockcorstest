@@ -1,55 +1,76 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Clock Test CORS</title>
-    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css"  >
-  </head>
+    <title>Cam Test</title>
+</head>
 <body>
-    <div class="container">
-        <main role="main" class="pb-3">
-            
-<div class="text-center">
-    <h1 class="display-4">Dayforce HTML Clock</h1>
-
-    <form>
-        <div class="form-group">
-            <label>Device Service Domain URL</label>
-            <input class="form-control" type="text" placeholder="Device Service Domain URL" name="domainUrl" id="domainUrl" value="https://qa.dayforce.com/862/deviceservices/DeviceServiceJSON.svc/getServerTime">
-        </div>
-        <button id="submit" class="btn btn-primary">Submit</button> <button id="clear" class="btn">Clear</button><br> <br>
- 
-        <div class="form-group">
-            <textarea class="form-control" type="text" placeholder="Request Result" id="requestResult" readonly></textarea>
-        </div>
-    </form>
-    <p>
-        <div class="alert alert-primary">
-            https://l-r910lped.corpadds.com/DeviceServices/DeviceServiceJSON.svc/getServerTime
-        </div>
-        <div class="alert alert-primary">
-            https://punch.dayforcehcm.com/DeviceServices/DeviceServiceJSON.svc/getServerTime
-        </div>
-        <div class="alert alert-primary">
-            https://ustestdftouch62e2.dayforcehcm.com/DeviceServices/DeviceServiceJSON.svc/getServerTime
-        </div>
-        <div class="alert alert-primary">
-            https://qa.dayforce.com/862/deviceservices/DeviceServiceJSON.svc/getServerTime
-        </div>
-    </p>
-</div>
-
-        </main>
+    <video id="camera-feed" autoplay></video>
+    <button id="capture-button">Cam test 4</button>
+    <img id="captured-image" src="" alt="Captured Image">
+    <div style="display: block; border: 2px solid red; margin-top: 10px;">
+        <span id="error-text">No errors</span>
     </div>
+    <script>
 
-    <script
-    src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-    crossorigin="anonymous"></script>
-    <script src="index.js"></script>
+        function assignDevice(deviceId) {
+            navigator.mediaDevices
+                .getUserMedia({ video: true, deviceId: deviceId })
+                .then(function (stream) {
+                    console.log('Assigning stream', stream);
+                    video.srcObject = stream;
+                })
+                .catch(function (error) {
+                    document.getElementById('error-text').innerHTML = "Error accessing the camera:" + error;
+                });
 
-    
+        }
+
+        // script.js
+        const video = document.getElementById('camera-feed');
+        const captureButton = document.getElementById('capture-button');
+        const capturedImage = document.getElementById('captured-image');
+
+        // Check for camera support
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices
+                .enumerateDevices()
+                .then((devices) => {
+                    devices.forEach((device) => {
+                        if (device.kind === 'videoinput') {
+                            console.log(device);
+                            assignDevice(device.deviceId)
+                        }
+
+                    });
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+
+
+
+        } else {
+            document.getElementById('error-text').innerHTML = "getUserMedia is not supported in this browser";
+        }
+
+        // Capture an image from the camera feed
+        captureButton.addEventListener('click', function () {
+            // Create a canvas element to capture the image
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+
+            // Draw the current frame from the video onto the canvas
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert the canvas content to a data URL (base64)
+            const dataURL = canvas.toDataURL('image/png');
+
+            // Display the captured image in the image element
+            capturedImage.src = dataURL;
+        });
+
+    </script>
 </body>
 </html>
